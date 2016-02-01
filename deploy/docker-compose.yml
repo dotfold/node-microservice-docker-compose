@@ -1,0 +1,50 @@
+# use this compose file to simulate a production environment
+# NOTE: breaks when the service is already pre-built, make sure you delete all of your containers before running `docker-compose up` with `docker rm -f $(docker ps -a -q)`
+
+application:
+  build: ./../app
+  volumes:
+    - "./../app/app:/src/app"
+  environment:
+    - NODE_ENV=development
+  ports:
+    - "8080:8080"
+
+service:
+  build: ./../service
+  volumes:
+    - "./../service/app:/src/app"
+  environment:
+    - NODE_ENV=development
+  ports:
+    - "9090:9090"
+
+# rabbitmq:
+#   image: rabbitmq:3-management
+#   ports:
+#     - "8081:15672"
+#     - "5672:5672"
+
+# elasticsearch:
+#   image: elasticsearch:latest
+#   command: elasticsearch -Des.network.host=0.0.0.0
+#   ports:
+#     - "9200:9200"
+#     - "9300:9300"
+# logstash:
+#   image: logstash:latest
+#   command: logstash -f /etc/logstash/conf.d/logstash.conf
+#   volumes:
+#     - ./logstash/config:/etc/logstash/conf.d
+#   ports:
+#     - "5000:5000"
+#   links:
+#     - elasticsearch
+# kibana:
+#   build: kibana/
+#   volumes:
+#     - ./kibana/config/kibana.yml:/opt/kibana/config/kibana.yml
+#   ports:
+#     - "5601:5601"
+#   links:
+#     - elasticsearch
