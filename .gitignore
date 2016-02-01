@@ -1,0 +1,9 @@
+# node
+node_modules/
+npm_debug.log
+
+## OS
+.DS_Store
+
+# IDE junk
+.idea*
